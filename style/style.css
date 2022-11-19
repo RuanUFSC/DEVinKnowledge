@@ -1,0 +1,172 @@
+[class*="fa-"]  {
+    color: rgb(114, 114, 114);
+    font-size: 30px;
+    padding: 5px;
+    width: 2.5vw;
+}
+
+[class*="fa-"]:hover {
+    color: rgb(34, 34, 34);
+}
+
+body {
+    background-color:#ffffff;
+    height: 100vh;
+}
+
+.header {
+    background-color: #74dfcb;
+    display: flex;
+    font-family: Raleway;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header img {
+    padding: 10px;
+    margin: 0px 20px;
+    width: 30px;
+}
+
+button {
+    margin: 5px;
+    cursor: pointer; 
+    border-radius: 10px;    
+}
+
+.body-left {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px 20px;
+}
+
+.body-left h1{
+    text-align: center;
+}
+
+.insertMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.insertMenu form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+.form-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.form-input button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    padding: 5px 20px;
+    width: 48%;
+}
+
+.form-item input {
+    border-radius: 10px;
+    height: 30px;
+}
+
+.form-item select {
+    border-radius: 10px;
+    height: 40px;
+    text-align: center;
+}
+
+.body-right {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    height: 87vh;
+}
+
+.languages {
+    display: flex;
+    flex-direction: row;   
+    justify-content: space-around;
+}
+
+.languages button {
+    background-color: aliceblue;
+    width: 20vw;
+    height: 2vw;
+    margin: 1vw;
+}
+
+.languages button:hover {
+    background-color: rgb(220, 237, 252);
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    text-align:justify;
+    box-sizing: border-box;
+    margin: 10px;
+}
+
+.search input {
+    height: 80%;
+    padding: 5px;
+    margin: 5px;
+    box-sizing: border-box;    
+    border-radius: 10px;    
+}
+
+.search form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100vw;
+}
+
+#itens {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;   
+    overflow-y: scroll;
+    width: 98%;
+    height: 100vh;
+}
+
+.item {
+    word-wrap: break-word;
+    box-sizing: border-box;
+    border: 1px solid gray;
+    border-radius: 10px; 
+    margin-bottom: 10px;
+    padding: 0 30px;
+}
+.item p {
+    font-size: 2vw;
+    font-weight: bold;
+    text-align: center;
+}
+
+.item-actions {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 20px 5px 5px 5px;
+}
