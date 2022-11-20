@@ -24,12 +24,25 @@
                     <form id="form" class="form col-12">
                         <div class="form-item">
                             <label for="title">Título:</label>
-                            <input required id="title" minlength="8" maxlength="64"/>
+                            <input 
+                                required 
+                                id="title" 
+                                minlength="8" 
+                                maxlength="64"
+                                placeholder="Insira um título para a sua dica"
+                            />
                         </div>
                 
                         <div class="form-item"">
                             <label for="skill">Linguagem:</label>
-                            <input type="select" required id="skill" minlength="2" maxlength="16"/>
+                            <input 
+                                type="select" 
+                                required 
+                                id="skill" 
+                                minlength="2" 
+                                maxlength="16"                            
+                                placeholder="Insira a linguagem da sua dica"
+                            />
                         </div>
                 
                         <div class="form-item">
@@ -44,12 +57,23 @@
                 
                         <div class="form-item">
                             <label for="description">Descrição:</label>
-                            <textarea required id="description" minlength="16" maxlength="512" rows="8"></textarea>
+                            <textarea 
+                                required 
+                                id="description" 
+                                minlength="16" 
+                                maxlength="512" 
+                                rows="8"                            
+                                placeholder="Insira a descrição da sua dica"
+                            ></textarea>
                         </div>
                 
                         <div class="form-item">
                             <label for="video">Vídeo do YouTube:</label>
-                            <input type="url" id="video" />
+                            <input 
+                                type="url" 
+                                id="video"                             
+                                placeholder="https://www.youtube.com/watch?v=..."
+                            />
                         </div>
                         <div class="form-input">
                             <button type="reset" class="button"><i class="fa-solid fa-brush"></i>Limpar</button>
@@ -60,15 +84,19 @@
             </section>
             <section class="body-right col-8">
                 <div id="languages">
-                   <!-- <button class="skill-total"></button>
-                    <button class="skill-back"></button>
-                    <button class="skill-front"></button>
-                    <button class="skill-full"></button>
-                    <button class="skill-soft"></button>-->
+                   <button class="skill-total">a</button>
+                    <button class="skill-back">a</button>
+                    <button class="skill-front">a</button>
+                    <button class="skill-full">a</button>
+                    <button class="skill-soft">a</button>
                 </div>
                 <div class="search">
-                    <form id="form col-12">
-                        <input required id="title" class="col-11"/>
+                    <form class="form col-12">
+                        <input 
+                            required id="title" 
+                            class="col-11"
+                            placeholder="Pesquise a sua dica"
+                        />
                         <button type="reset" class="button"><i class="fa-solid fa-magnifying-glass"></i></button>
                         <button type="submit" class="button"><i class="fa-solid fa-brush"></i></button>
                     </form>    
