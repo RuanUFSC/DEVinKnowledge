@@ -10,8 +10,72 @@
     <link rel="stylesheet" href="./style/layout.css">
     <script src="https://kit.fontawesome.com/f4860325f3.js" crossorigin="anonymous"></script>
     <script src="./scripts/app.js" async></script>
-</head>
+    </head>
 <body>
+    
+    <div class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edite a sua dica</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="form-edicao" class="form">
+                        <div class="form-item">
+                            <label for="title">Título:</label>
+                            <input 
+                                required 
+                                id="titleEdit" 
+                                minlength="8" 
+                                maxlength="64"
+                            />
+                        </div>
+                        <div class="form-item"">
+                            <label for="skill">Linguagem:</label>
+                            <input 
+                                type="select" 
+                                required 
+                                id="skillEdit" 
+                                minlength="2" 
+                                maxlength="16"                            
+                            />
+                        </div>
+                        <div class="form-item">
+                            <label for="category">Categoria:</label>
+                            <select id="categoryEdit">
+                                <option>FrontEnd</option>
+                                <option>BackEnd</option>
+                                <option>FullStack</option>
+                                <option>SoftSkill</option>
+                            </select>   
+                        </div>                
+                        <div class="form-item">
+                            <label for="description">Descrição:</label>
+                            <textarea 
+                                required 
+                                id="descriptionEdit" 
+                                minlength="16" 
+                                maxlength="512" 
+                                rows="8"                            
+                            ></textarea>
+                        </div>
+                
+                        <div class="form-item">
+                            <label for="video">Vídeo do YouTube:</label>
+                            <input 
+                                type="url" 
+                                id="videoEdit"                             
+                            />
+                        </div>
+                        <div class="form-input">
+                            <button type="reset" class="button"><i class="fa-solid fa-brush"></i>Limpar</button>
+                            <button type="submit" class="button"><i class="fa-solid fa-floppy-disk"></i>Salvar</button>
+                        </div>
+                    </form>
+                       
+                </div>
+            </div>
+    </div>
+
     <header class="header">
         <img src="./public/img/favicon.png" alt="logotipo">
         <h3>DEVinKnowledge</h3>
@@ -21,7 +85,7 @@
             <section class="body-left col-4">
                 <h2>Cadastre uma dica</h2>
                 <div class="insertMenu">
-                    <form id="form" class="form col-12">
+                    <form id="formCadastro" class="form col-12">
                         <div class="form-item">
                             <label for="title">Título:</label>
                             <input 
@@ -84,39 +148,24 @@
             </section>
             <section class="body-right col-8">
                 <div id="languages">
-                   <button class="skill-total">a</button>
-                    <button class="skill-back">a</button>
-                    <button class="skill-front">a</button>
-                    <button class="skill-full">a</button>
-                    <button class="skill-soft">a</button>
+                    <button id="btn-total"></button>
+                    <button id="btn-backend"></button>
+                    <button id="btn-frontend"></button>
+                    <button id="btn-fulltstack"></button>
+                    <button id="btn-softskill"></button>
                 </div>
                 <div class="search">
-                    <form class="form col-12">
+                    <form class="form col-12" id="form-consulta">
                         <input 
-                            required id="title" 
+                            id="titleSearch" 
                             class="col-11"
-                            placeholder="Pesquise a sua dica"
+                            placeholder="Pesquise o título ou a descrição da sua dica"
                         />
-                        <button type="reset" class="button"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        <button type="submit" class="button"><i class="fa-solid fa-brush"></i></button>
+                        <button type="submit" class="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button type="reset" class="button"><i class="fa-solid fa-brush"></i></button>
                     </form>    
                 </div>
-                <div id="itens">
-                    <div class="item">
-                        <p>Titulo</p>
-                        <b>Linguagem/Skill</b> Ling
-                        <br>
-                        <b>Categoria</b> Categoria
-                        <br><br>
-                        DescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescrição
-                        <div class="item-actions">
-                            <button class="link"><i class="fa-solid fa-link"></i></button>
-                            <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                            <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                        </div>
-                    </div>
-                    
-                </div>
+                <div id="itens"></div>
             </section>
         </div>
     </main>

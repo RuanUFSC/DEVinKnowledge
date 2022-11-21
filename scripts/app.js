@@ -1,88 +1,77 @@
 const languages = document.getElementById('languages');
 const itens = document.getElementById('itens');
-const form = document.getElementById('form');
-
-const montaTexto = (tipo, texto) => {
-    const elemento = document.createElement(tipo);
-    elemento.innerText = texto;
-    return elemento;
-  };
-
-var postData = async (evento) => {
-    try {
-        const dados = {
-            title: evento.target.title.value,
-            skill: evento.target.skill.value,
-            category: evento.target.category.value,
-            description: evento.target.description.value,
-            video: video ? evento.target.video.value : ""
-          };
-
-        const result = await fetch('http://localhost:3000/dicas', {
-            method: 'POST',
-            body: JSON.stringify(dados),
-            headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        });
-        console.log('postdata', result.json());
-        evento = '';
-    } catch (error) {
-        console.error(error);
-    }
-}
+const formCadastro = document.getElementById('formCadastro');
+const formEdicao = document.getElementById('form-edicao');
+const formConsulta = document.getElementById('form-consulta');
+const deleteButton = document.getElementsByClassName('delete');
+const btnTotal = document.getElementById('btn-total');
+const btnBackend = document.getElementById('btn-backend');
+const btnFrontend = document.getElementById('btn-frontend');
+const btnFullstack = document.getElementById('btn-fulltstack');
+const btnSoftskill = document.getElementById('btn-softskill');
+const modal = document.querySelector('.modal');
 
 async function getData() {
     try {
         const retorno = await fetch('http://localhost:3000/dicas');
         const retornoJson = await retorno.json();
-        var total = retornoJson.length;
-        //CRIAR DIV DE TITULO, ETC
+        
+        await quantityButtons(retornoJson);
+        await itensHtml(retornoJson);
+
+    } catch (error) {
+      console.error(error);
+    }
+}
+
+async function quantityButtons(dados) {
+    try {  
+        //Montando arrays com as categorias
+        const total = dados.length;
+        const backend = dados.filter(retorno => retorno.category == 'BackEnd');
+        const frontend = dados.filter(retorno => retorno.category == 'FrontEnd');
+        const fullstack = dados.filter(retorno => retorno.category == 'FullStack');
+        const softskill = dados.filter(retorno => retorno.category == 'SoftSkill');
+        
+        //Adicionando quantidades por linguagem
+        btnTotal.innerHTML += `Total: ${total}`;
+        btnBackend.innerHTML += `BackEnd: ${backend.length}`;  
+        btnFrontend.innerHTML += `FrontEnd: ${frontend.length}`; 
+        btnFullstack.innerHTML += `FullStack: ${fullstack.length}`; 
+        btnSoftskill.innerHTML += `SoftSkill: ${softskill.length}`; 
+        
     } catch (error) {
         console.error(error);
     }
 }
-  
-async function getSkillsQuantity() {
-    try {
+
+async function filterData(evento) {
+    try {        
+        evento.preventDefault();
         const retorno = await fetch('http://localhost:3000/dicas');
         const retornoJson = await retorno.json();
         
-        //Montando arrays com as categorias
-        const total = retornoJson.length;
-        const backend = retornoJson.filter(retorno => retorno.category == 'BackEnd');
-        const frontend = retornoJson.filter(retorno => retorno.category == 'FrontEnd');
-        const fullstack = retornoJson.filter(retorno => retorno.category == 'FullStack');
-        const softskill = retornoJson.filter(retorno => retorno.category == 'SoftSkill');
-        
-        languages.innerHTML = '';
+        const dadosFiltrados = retornoJson.filter(retorno => retorno.title.toLowerCase().includes(evento.target.titleSearch.value.toLowerCase()) || retorno.description.toLowerCase().includes(evento.target.titleSearch.value.toLowerCase()));
+        console.log('dadosfiltrados', dadosFiltrados)
+        await itensHtml(dadosFiltrados);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function itensHtml(dados) {
+    try {
+        //Limpando a div        
         itens.innerHTML = '';
 
-        //Criação dos botões com as quantidades por linguagem
-        const btnTotal = document.createElement('button');
-        btnTotal.innerHTML += `Total: ${total}`;  
-        const btnBackend = document.createElement('button');
-        btnBackend.innerHTML += `BackEnd: ${backend.length}`;  
-        const btnFrontend = document.createElement('button');
-        btnFrontend.innerHTML += `FrontEnd: ${frontend.length}`; 
-        const btnFullstack = document.createElement('button');
-        btnFullstack.innerHTML += `FullStack: ${fullstack.length}`; 
-        const btnSoftskill = document.createElement('button');
-        btnSoftskill.innerHTML += `SoftSkill: ${softskill.length}`; 
-
-        languages.appendChild(btnTotal);
-        languages.appendChild(btnBackend);        
-        languages.appendChild(btnFrontend);        
-        languages.appendChild(btnFullstack);        
-        languages.appendChild(btnSoftskill);
-
-        //FAZER UM FILTER PRA PEGAR A QUANTIDADE DE CADA LINGUAGEM
-
-        retornoJson.forEach((retorno) => {
+        //Criação das divs com os dados e botões
+        dados.forEach((retorno) => {
             const divItem = document.createElement('div');
             const divItemActions = document.createElement('div');
             const linkButton = document.createElement('button');
             const deleteButton = document.createElement('button');
             const editButton = document.createElement('button');
-            const title = montaTexto('p', `${retorno.title}`);
 
             divItem.classList.add('item');
             divItemActions.classList.add('item-actions');
@@ -97,28 +86,116 @@ async function getSkillsQuantity() {
             deleteButton.innerHTML += '<i class="fa-solid fa-trash"></i>';
             editButton.innerHTML += '<i class="fa-solid fa-pen-to-square"></i>';
 
+            //Montando estrutura html da div  
             divItemActions.appendChild(deleteButton);
             divItemActions.appendChild(editButton);
-            divItem.appendChild(title);
+            divItem.innerHTML += `<p> ${retorno.title} </p>`
             divItem.innerHTML += `<b> Linguagem/Skill: </b> ${retorno.skill}`;       
             divItem.innerHTML += `<br><b> Categoria: </b> ${retorno.category}<br><br>`;
             divItem.innerHTML += `${retorno.description}`;
             divItem.appendChild(divItemActions);
             itens.appendChild(divItem);
-            //const foto = document.createElement('img');
-            //foto.src = user.picture.large;
-    //
-            //divDados.appendChild(nome);
-            //divDados.appendChild(email);
-            //divDados.appendChild(endereco);     
-            //divContainer.appendChild(foto);
-            //lista.appendChild(button);
+
+            deleteButton.addEventListener('click', () => deleteItem(retorno.id))
+            editButton.addEventListener('click', () => editItem(retorno.id, retorno))
         });
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  }
-  
-getSkillsQuantity();
+}
 
-form.addEventListener('submit', postData);
+var postData = async (evento) => {
+    try {
+        evento.preventDefault();
+        const dados = {
+            title: evento.target.title.value,
+            skill: evento.target.skill.value,
+            category: evento.target.category.value,
+            description: evento.target.description.value,
+            video: video ? evento.target.video.value : ""
+          };
+
+        const result = await fetch('http://localhost:3000/dicas', {
+            method: 'POST',
+            body: JSON.stringify(dados),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        });
+    } catch (error) {
+        console.error(error);
+        postData(evento);
+    }
+}
+
+
+var patchData = async (evento, id) => {
+    try {
+        evento.preventDefault();
+        const editDados = {
+            title: evento.target.titleEdit.value,
+            skill: evento.target.skillEdit.value,
+            category: evento.target.categoryEdit.value,
+            description: evento.target.descriptionEdit.value,
+            video: video ? evento.target.videoEdit.value : ""
+          };
+
+        const edita = await fetch(`http://localhost:3000/dicas/${id}`, {
+            method: 'PATCH',            
+            body: JSON.stringify(editDados),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function deleteItem(id){
+    try {
+        if(window.confirm('Deseja realmente excluir essa dica?')) {
+            const deleta = await fetch(`http://localhost:3000/dicas/${id}`, {
+                method: 'DELETE'
+            });
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function modalEvent() {
+    const style = modal.style.display;
+            if (style == 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+            }
+}
+
+async function editItem(id, data){
+    try {
+        modalEvent();
+        const titleEdit = document.getElementById('titleEdit');
+        const skillEdit = document.getElementById('skillEdit');
+        const categoryEdit = document.getElementById('categoryEdit');
+        const descriptionEdit = document.getElementById('descriptionEdit');
+        const videoEdit = document.getElementById('videoEdit');
+
+        titleEdit.value = data.title;
+        skillEdit.value = data.skill;
+        categoryEdit.value = data.category;;
+        descriptionEdit.value = data.description;;
+        videoEdit.value = data.video;
+        
+        formEdicao.addEventListener('submit', () => patchData(event, id));
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modalEvent();
+    }
+}
+
+getData();
+formCadastro.addEventListener('submit', postData);
+formConsulta.addEventListener('submit', () => filterData(event));

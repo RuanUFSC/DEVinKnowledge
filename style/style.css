@@ -99,20 +99,20 @@ button {
     height: 87vh;
 }
 
-.languages {
+#languages {
     display: flex;
     flex-direction: row;   
     justify-content: space-around;
 }
 
-.languages button {
+#languages button {
     background-color: aliceblue;
-    width: 20vw;
-    height: 2vw;
+    width: 15vw;
+    height: 40px;
     margin: 1vw;
 }
 
-.languages button:hover {
+#languages button:hover {
     background-color: rgb(220, 237, 252);
 }
 
@@ -146,7 +146,7 @@ button {
     flex-direction: column;
     margin: 10px;
     padding: 10px;   
-    overflow-y: scroll;
+    overflow-y: auto;
     width: 98%;
     height: 100vh;
 }
