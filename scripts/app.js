@@ -11,19 +11,6 @@ const btnFullstack = document.getElementById('btn-fulltstack');
 const btnSoftskill = document.getElementById('btn-softskill');
 const modal = document.querySelector('.modal');
 
-async function getData() {
-    try {
-        const retorno = await fetch('http://localhost:3000/dicas');
-        const retornoJson = await retorno.json();
-        
-        await quantityButtons(retornoJson);
-        await itensHtml(retornoJson);
-
-    } catch (error) {
-      console.error(error);
-    }
-}
-
 async function quantityButtons(dados) {
     try {  
         //Montando arrays com as categorias
@@ -45,20 +32,6 @@ async function quantityButtons(dados) {
     }
 }
 
-async function filterData(evento) {
-    try {        
-        evento.preventDefault();
-        const retorno = await fetch('http://localhost:3000/dicas');
-        const retornoJson = await retorno.json();
-        
-        const dadosFiltrados = retornoJson.filter(retorno => retorno.title.toLowerCase().includes(evento.target.titleSearch.value.toLowerCase()) || retorno.description.toLowerCase().includes(evento.target.titleSearch.value.toLowerCase()));
-        console.log('dadosfiltrados', dadosFiltrados)
-        await itensHtml(dadosFiltrados);
-
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 async function itensHtml(dados) {
     try {
@@ -104,6 +77,48 @@ async function itensHtml(dados) {
     }
 }
 
+async function getData() {
+    try {
+        const retorno = await fetch('http://localhost:3000/dicas');
+        const retornoJson = await retorno.json();
+        
+        await quantityButtons(retornoJson);
+        await itensHtml(retornoJson);
+
+    } catch (error) {
+      console.error(error);
+    }
+}
+
+async function filterData(evento) {
+    try {        
+        evento.preventDefault();
+        const retorno = await fetch('http://localhost:3000/dicas');
+        const retornoJson = await retorno.json();
+        
+        const dadosFiltrados = retornoJson.filter(retorno => retorno.title.toLowerCase().includes(evento.target.titleSearch.value.toLowerCase()) || retorno.description.toLowerCase().includes(evento.target.titleSearch.value.toLowerCase()));
+        console.log('dadosfiltrados', dadosFiltrados)
+        await itensHtml(dadosFiltrados);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function filterCategory(category) {
+    try {        
+        const retorno = await fetch('http://localhost:3000/dicas');
+        const retornoJson = await retorno.json();
+        
+        const dadosFiltrados = retornoJson.filter(retorno => retorno.category.includes(category));
+        await itensHtml(dadosFiltrados);
+        console.log(retornoJson[0].category, category)
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 var postData = async (evento) => {
     try {
         evento.preventDefault();
@@ -125,7 +140,6 @@ var postData = async (evento) => {
         postData(evento);
     }
 }
-
 
 var patchData = async (evento, id) => {
     try {
@@ -160,15 +174,6 @@ async function deleteItem(id){
     }
 }
 
-async function modalEvent() {
-    const style = modal.style.display;
-            if (style == 'block') {
-                modal.style.display = 'none';
-            } else {
-                modal.style.display = 'block';
-            }
-}
-
 async function editItem(id, data){
     try {
         modalEvent();
@@ -196,6 +201,20 @@ window.onclick = function(event) {
     }
 }
 
+async function modalEvent() {
+    const style = modal.style.display;
+            if (style == 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+            }
+}
+
 getData();
 formCadastro.addEventListener('submit', postData);
 formConsulta.addEventListener('submit', () => filterData(event));
+btnTotal.addEventListener('click', () => filterCategory(''));
+btnBackend.addEventListener('click', () => filterCategory('BackEnd'));
+btnFrontend.addEventListener('click', () => filterCategory('FrontEnd'));
+btnFullstack.addEventListener('click', () => filterCategory('FullStack'));
+btnSoftskill.addEventListener('click', () => filterCategory('SoftSkill'));
